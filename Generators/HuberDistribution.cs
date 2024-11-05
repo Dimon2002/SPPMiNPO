@@ -73,6 +73,4 @@ public class HuberDistribution : IDistribution
     {
         return _random.NextDouble();
     }
-
-
 }
