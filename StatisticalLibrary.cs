@@ -47,7 +47,30 @@ public static class StatisticalLibrary
         var mean = Mean(values);
         var varianceSquare = double.Pow(Variance(values), 2);
 
-        return values.Select(x => double.Pow(x - mean, 4)).Sum() 
+        return values.Select(x => double.Pow(x - mean, 4)).Sum()
                / (countValues * varianceSquare) - 3;
     }
+
+    public static double MeanCut(double[] values, double alpha)
+    {
+        if (alpha < 0 || alpha >= 0.5d)
+        {
+            throw new ArgumentOutOfRangeException(nameof(alpha));
+        }
+
+        var countValues = values.Length;
+        var sortedValues = values.OrderBy(x => x).ToList();
+
+        var k = (int)(countValues * alpha);
+
+        double sum = 0d;
+
+        for (int i = k; i < countValues - k; ++i)
+        {
+            sum += sortedValues[i];
+        }
+
+        return sum / (countValues - 2 * k);
+    }
+
 }
