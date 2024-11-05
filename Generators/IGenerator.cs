@@ -2,5 +2,7 @@
 
 public interface IGenerator
 {
-    double Generate();
+    double GenerateValue();
+
+    double[] GenerateValues(int N);
 }

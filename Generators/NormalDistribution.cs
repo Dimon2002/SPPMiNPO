@@ -15,10 +15,10 @@ public class NormalDistribution : IDistribution
 
     public double Density(double x)
     {
-        throw new NotImplementedException();
+        return Math.Exp(-Math.Pow(x, 2) / 2) / Math.Sqrt(2 * Math.PI);
     }
     
-    public double Generate()
+    public double GenerateValue()
     {
         var firstRandomValue = GetRandomValue();
         var secondRandomValue = GetRandomValue();
@@ -29,5 +29,18 @@ public class NormalDistribution : IDistribution
     private double GetRandomValue()
     {
         return _random.NextDouble();
+    }
+
+    public double[] GenerateValues(int N)
+    {
+        IList<double> values = [];
+
+        for (int i = 0; i < N; ++i)
+        {
+            var value = GenerateValue();
+            values.Add(value);
+        }
+
+        return [.. values];
     }
 }

@@ -15,7 +15,7 @@ public class HuberDistribution : IDistribution
     {
         _parameters = parameters;
 
-        // Initialize(); // why man
+         //Initialize(); // why man 
     }
 
     private void Initialize()
@@ -23,7 +23,7 @@ public class HuberDistribution : IDistribution
         _parameters.P = 2 * Density(_parameters.K, _parameters.V) * (1 - _parameters.V) / _parameters.K;
     }
 
-    public double Generate()
+    public double GenerateValue()
     {
         double r1 = GetRandomValue();
 
@@ -32,7 +32,7 @@ public class HuberDistribution : IDistribution
             double x1;
             do
             {
-                x1 = _normalDistribution.Generate();
+                x1 = _normalDistribution.GenerateValue();
             } while (double.Abs(x1) > _parameters.K);
 
             return x1;
@@ -42,6 +42,19 @@ public class HuberDistribution : IDistribution
         double x2 = _parameters.K - (double.Log(r2)) / _parameters.K;
 
         return r1 < (1 + _parameters.P) / 2 ? x2 : -x2;
+    }
+
+    public double[] GenerateValues(int N)
+    {
+        IList<double> values = [];
+
+        for (int i = 0; i < N; ++i)
+        {
+            var value = GenerateValue();
+            values.Add(value);
+        }
+
+        return [.. values];
     }
 
     private double Density(double x, double v)
@@ -60,4 +73,6 @@ public class HuberDistribution : IDistribution
     {
         return _random.NextDouble();
     }
+
+
 }

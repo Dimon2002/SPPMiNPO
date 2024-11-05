@@ -14,7 +14,7 @@ public class Program
 
         Console.WriteLine("Hello, World!");
 
-        HuberDistribution HuberDistribution = new(new HuberParameters()
+        var distribution = new HuberDistribution(new HuberParameters()
         {
             V = 0.05,
             K = 1.398,
@@ -23,10 +23,12 @@ public class Program
 
         using var writer = new StreamWriter(OutPath);
 
-        for (int i = 0; i < 500; i++)
+        int i = 1;
+        foreach (var item in distribution.GenerateValues(500))
         {
-            writer.WriteLine($"{i} {HuberDistribution.Generate()}");
-        }
+            writer.WriteLine($"{i} {item}");
+            ++i;
+        };
     }
 }
 
